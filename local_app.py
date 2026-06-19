@@ -60,7 +60,7 @@ elif c==3:
 elif c==4:
   sql=st.selectbox("Choose method:",["SQL","Python"])
   if sql == "SQL":
-    query="SELECT employee_name,ROUND(AVG(TIMESTAMPDIFF(MINUTE,STR_TO_DATE(check_in,'%H:%i'),STR_TO_DATE(check_out,'%H:%i')))/60,2) AS avg_hours FROM attendance GROUP BY employee_name"
+    query="SELECT employee_name,ROUND(AVG(((substr(check_out,1,instr(check_out,':')-1)*60 +substr(check_out,instr(check_out,':')+1))-(substr(check_in,1,instr(check_in,':')-1)*60+substr(check_in,instr(check_in,':')+1)))/60),2) AS avg_hours FROM attendance GROUP BY employee_name"
     r=pd.read_sql(query,conn)
     st.dataframe(r)
   elif sql=="Python":
