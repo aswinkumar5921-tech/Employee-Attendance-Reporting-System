@@ -4,11 +4,11 @@ import mysql.connector
 
 df=pd.read_csv("attendance.csv")
 
-mydb=mysql.connector.connect(
-    host=st.secrets["localhost"],
-    user=st.secrets["root"],
-    password=st.secrets["Aswin123*"],
-    database=st.secrets["attendance_db"]
+mydb = mysql.connector.connect(
+    host=st.secrets["MYSQL_HOST"],
+    user=st.secrets["MYSQL_USER"],
+    password=st.secrets["MYSQL_PASSWORD"],
+    database=st.secrets["MYSQL_DATABASE"]
 )
 
 
