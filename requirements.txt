@@ -5,7 +5,3 @@ pandas #data manipulation
 
 #python packages to install for mysql connection
 mysql-connector-python #for linking mysql database with python
-
-
-#python packages to import for sqlite connection
-import sqlite3 
