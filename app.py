@@ -6,7 +6,7 @@ url="https://attendance-aswin-201430837078-ap-southeast-2-an.s3.ap-southeast-2.a
 df=pd.read_csv(url)
 conn = sqlite3.connect(":memory:")
 df.to_sql("attendance",conn,if_exists="replace",index=False)
-
+st.set_page_config(layout="wide")
 st.title("Employee Attendance & Reporting System")
 st.write("Questions:")
 st.write("1.How many days did each employee work?")
@@ -34,7 +34,8 @@ if c==1:
     r=pd.read_sql(query,conn)
     st.dataframe(r)
   elif sql=="Python":
-    st.write(r)
+    st.dataframe(r.reset_index(),use_container_width=True)
+
 
 elif c==2: 
   sql=st.selectbox("Choose method:",["SQL","Python"])
@@ -44,7 +45,7 @@ elif c==2:
     st.dataframe(r)
   elif sql=="Python":
     r1=23-r
-    st.write(r1)
+    st.dataframe(r1.reset_index(),use_container_width=True)
 
 elif c==3:  
   sql=st.selectbox("Choose method:",["SQL","Python"])
@@ -54,7 +55,7 @@ elif c==3:
     st.dataframe(r)
   elif sql=="Python":
     r = (df.assign(late=(df["check_in"] > "9:15")).groupby("employee_name")["late"].sum())
-    st.write(r)
+    st.dataframe(r.reset_index(),use_container_width=True)
 
 elif c==4:
   sql=st.selectbox("Choose method:",["SQL","Python"])
@@ -65,8 +66,8 @@ elif c==4:
   elif sql=="Python":
     df["hours"] = (df["check_out"] - df["check_in"]).dt.total_seconds()/3600
     r=df.groupby("employee_name")["hours"].mean().round(2)
-    st.write(r)
-    
+    st.dataframe(r.reset_index(),use_container_width=True)
+
 elif c==5:
   sql=st.selectbox("Choose method:",["SQL","Python"])
   if sql == "SQL":
@@ -75,7 +76,8 @@ elif c==5:
     st.dataframe(r)
   elif sql=="Python":
     max1=r.max()
-    st.write(r[r==max1])
+    st.dataframe(r[r==max1].reset_index(),use_container_width=True)
+
 elif c==6:
   sql=st.selectbox("Choose method:",["SQL","Python"])
   if sql == "SQL":
@@ -85,7 +87,7 @@ elif c==6:
   elif sql=="Python":
     r1=23-r
     max2=r1.max()
-    st.write(r1[r1==max2])
+    st.dataframe(r1[r1==max2].reset_index(),use_container_width=True)
 elif c==7:
   sql=st.selectbox("Choose method:",["SQL","Python"])
   if sql == "SQL":
@@ -94,7 +96,7 @@ elif c==7:
     st.dataframe(r)
   elif sql=="Python":
     r=(df.assign(early=(df["check_out"] < "18:00")).groupby("employee_name")["early"].sum())
-    st.write(r)
+    st.dataframe(r.reset_index(),use_container_width=True)
 elif c==8:
   sql=st.selectbox("Choose method:",["SQL","Python"])
   if sql == "SQL":
@@ -103,7 +105,8 @@ elif c==8:
     st.dataframe(r)
   elif sql=="Python":
     r=df[df["employee_name"].str.startswith("A")]
-    st.write(r["employee_name"].unique())
+    st.dataframe(r["employee_name"].unique(),use_container_width=True)
+    
 elif c==9:
   sql=st.selectbox("Choose method:",["SQL","Python"])
   if sql == "SQL":
@@ -112,7 +115,7 @@ elif c==9:
     st.dataframe(r)
   elif sql=="Python":
     r=df[df["employee_name"].str.contains("r") & df["employee_name"].str.contains("s")]
-    st.write(r["employee_name"].unique())
+    st.dataframe(r["employee_name"].unique(),use_container_width=True)
   
 elif c==10:
   sql=st.selectbox("Choose method:",["SQL","Python"])
@@ -122,4 +125,4 @@ elif c==10:
     st.dataframe(r)
   elif sql=="Python":
     r=df[df["date"]=="6/9/2026"]
-    st.write(r["employee_name"].unique())
+    st.dataframe(r["employee_name"].unique(),use_container_width=True)
